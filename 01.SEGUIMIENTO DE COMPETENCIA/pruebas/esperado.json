@@ -1,0 +1,53 @@
+{
+ "1": {
+  "fecha": "2026-09-24",
+  "mios": {
+   "DIESEL": 26.99,
+   "PREMIUM": 27.99,
+   "REGULAR": 23.79
+  },
+  "tope": 3.6,
+  "n_total": 3,
+  "n_vecinos": 2,
+  "n_en_2km": 2,
+  "fuera_radio": 0,
+  "REGULAR_full": {
+   "n": 3,
+   "prom": 23.81,
+   "min": 23.68,
+   "max": 23.9,
+   "dif": -0.02,
+   "pct": -0.1
+  },
+  "REGULAR_2km": {
+   "n": 2,
+   "prom": 23.87,
+   "min": 23.84,
+   "max": 23.9,
+   "dif": -0.08,
+   "pct": -0.3
+  }
+ },
+ "9": {
+  "fecha": "2026-09-24",
+  "mios": {
+   "DIESEL": 26.99,
+   "PREMIUM": 28.59,
+   "REGULAR": 23.99
+  },
+  "tope": 6.5,
+  "n_total": 3,
+  "n_vecinos": 0,
+  "n_en_2km": 1,
+  "fuera_radio": 2,
+  "REGULAR_full": {
+   "n": 2,
+   "prom": 23.64,
+   "min": 23.39,
+   "max": 23.89,
+   "dif": 0.35,
+   "pct": 1.5
+  },
+  "REGULAR_2km": null
+ }
+}

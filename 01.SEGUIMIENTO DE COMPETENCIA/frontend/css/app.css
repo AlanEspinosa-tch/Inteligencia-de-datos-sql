@@ -1,0 +1,428 @@
+/* Red Treher — estilos de la aplicacion.
+   Sin framework: son pocas pantallas y una hoja se lee de un vistazo. */
+
+:root {
+  --azul:          #1d4ed8;   /* mis estaciones */
+  --rojo:          #dc2626;   /* competencia directa, es_competencia = 1 */
+  --amarillo:      #eab308;   /* vecina registrada que NO compite */
+  --propia:        #0f766e;   /* verde azulado, acentos de la interfaz */
+  --propia-suave:  #ccfbf1;
+  --comp:          #b45309;   /* ambar, competencia */
+  --comp-suave:    #fef3c7;
+  --confirmado:    #7c3aed;   /* morado, competidor confirmado del seleccionado */
+  --sin-dato:      #9ca3af;
+  --texto:         #18181b;
+  --texto-suave:   #52525b;
+  --borde:         #e4e4e7;
+  --fondo:         #ffffff;
+  --fondo-suave:   #fafafa;
+  --caro:          #b91c1c;   /* la propia esta MAS cara */
+  --barato:        #15803d;   /* la propia esta MAS barata */
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; height: 100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+body { display: flex; flex-direction: column; }
+
+/* ------------------------------------------------------------ barra */
+
+.barra {
+  display: flex; align-items: center; gap: 20px;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--borde);
+  background: var(--fondo);
+  flex-wrap: wrap;
+}
+.titulo { display: flex; align-items: baseline; gap: 10px; }
+.titulo strong { font-size: 16px; letter-spacing: -0.01em; }
+.titulo .sub { font-size: 13px; color: var(--texto-suave); }
+
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+.chip {
+  font-size: 12px; padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--borde); background: var(--fondo-suave);
+  color: var(--texto-suave); white-space: nowrap;
+}
+.chip b { color: var(--texto); font-variant-numeric: tabular-nums; }
+.chip.propias   { background: #dbeafe; border-color: #bfdbfe; }
+.chip.directa   { background: #fee2e2; border-color: #fecaca; }
+.chip.nodirecta { background: #fef9c3; border-color: #fde68a; }
+
+.fecha { font-size: 12px; color: var(--texto-suave); white-space: nowrap; }
+
+/* ------------------------------------------------------------- mapa */
+
+main { flex: 1; position: relative; min-height: 0; }
+#mapa { position: absolute; inset: 0; background: #eef1f4; }
+
+.controles {
+  position: absolute; left: 12px; bottom: 22px; z-index: 500;
+  display: flex; flex-direction: column; gap: 8px; align-items: flex-start;
+}
+
+.oculto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.productos {
+  background: rgba(255,255,255,.97);
+  border: 1px solid var(--borde); border-radius: 8px;
+  padding: 8px 12px; margin: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+}
+.productos label {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; line-height: 2; cursor: pointer;
+}
+.productos input { accent-color: var(--propia); margin: 0; cursor: pointer; }
+.pd { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.pd.regular { background: #15803d; }
+.pd.premium { background: #b91c1c; }
+.pd.diesel  { background: #111827; }
+
+.leyenda {
+  background: rgba(255,255,255,.97);
+  border: 1px solid var(--borde); border-radius: 8px;
+  padding: 9px 11px; font-size: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.12);
+}
+.ley { display: flex; align-items: center; gap: 8px; line-height: 1.95; }
+.ley .m {
+  width: 15px; height: 15px; flex: none;
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  border: 1.5px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.12);
+  font-size: 8px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.ley .m.propia     { background: var(--azul); }
+.ley .m.propia > * , .ley .m.propia { line-height: 1; }
+.ley .m.directa    { background: var(--rojo); }
+.ley .m.nodirecta  { background: var(--amarillo); }
+.ley .m.sin        { background: #f4f4f5; border-color: var(--sin-dato); box-shadow: 0 0 0 1px var(--sin-dato); }
+.ley .m.propia { text-indent: 0; }
+
+.punto {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  vertical-align: -1px;
+}
+.punto.directa   { background: var(--rojo); }
+.punto.nodirecta { background: var(--amarillo); }
+
+/* ------------------------------------------------- marcadores del mapa */
+
+.mk {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  background: none; border: none;
+}
+.mk .pill {
+  font-size: 11.5px; font-weight: 600; line-height: 1.5;
+  padding: 1px 7px; border-radius: 10px; margin-bottom: 3px;
+  white-space: nowrap; color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  font-variant-numeric: tabular-nums;
+}
+.mk .pin {
+  width: 22px; height: 22px; flex: none;
+  border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+  display: flex; align-items: center; justify-content: center;
+}
+.mk .pin span {
+  transform: rotate(45deg);
+  color: #fff; font-weight: 800; font-size: 12px; line-height: 1;
+}
+
+.mk-propia .pin  { width: 28px; height: 28px; background: var(--azul); }
+.mk-propia .pin span { font-size: 14px; }
+.mk-propia .pill { background: var(--azul); }
+
+.mk-directa .pin  { background: var(--rojo); }
+.mk-directa .pill { background: var(--rojo); }
+
+.mk-no_directa .pin  { background: var(--amarillo); }
+.mk-no_directa .pill { background: var(--amarillo); color: #422006; }
+
+.mk-sin_relacion .pin  { background: var(--sin-dato); }
+.mk-sin_relacion .pill { background: var(--sin-dato); }
+
+/* Sin precio del producto elegido: el pin se queda hueco y sin etiqueta. */
+.mk-sin .pin { background: #fff !important; border-color: var(--sin-dato); box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.mk-sin .pin span { color: var(--sin-dato); }
+.mk-propia.mk-sin .pin { border-color: var(--azul); }
+.mk-propia.mk-sin .pin span { color: var(--azul); }
+
+/* Con una estacion seleccionada, lo que no participa se apaga. */
+.mk-apagada { opacity: .32; }
+.mk-apagada .pin  { background: var(--sin-dato); width: 16px; height: 16px; }
+.mk-apagada .pill { display: none; }
+
+/* A menos de ZOOM_ETIQUETAS no caben 93 etiquetas: solo los pines. */
+body.sin-etiquetas .mk .pill { display: none; }
+
+/* ----------------------------------------------------------- popups */
+
+.leaflet-popup-content { margin: 12px 14px; min-width: 232px; }
+.pop-nombre { font-weight: 600; font-size: 13.5px; line-height: 1.3; }
+.pop-meta   { font-size: 12px; color: var(--texto-suave); margin-top: 3px; line-height: 1.45; }
+.pop-etiqueta {
+  display: inline-block; font-size: 10.5px; text-transform: uppercase;
+  letter-spacing: .05em; padding: 2px 7px; border-radius: 4px; margin-top: 7px;
+}
+.pop-etiqueta.propia    { background: #dbeafe; color: #1e3a8a; }
+.pop-etiqueta.directa   { background: #fee2e2; color: #991b1b; }
+.pop-etiqueta.nodirecta { background: #fef9c3; color: #854d0e; }
+.pop-etiqueta.cerrada   { background: #f4f4f5; color: #52525b; }
+table.precios tr.activo th, table.precios tr.activo td { font-weight: 600; }
+
+table.precios { width: 100%; border-collapse: collapse; margin-top: 9px; font-size: 12.5px; }
+table.precios th { text-align: left; font-weight: 500; color: var(--texto-suave); padding: 3px 0; }
+table.precios td { text-align: right; font-variant-numeric: tabular-nums; padding: 3px 0; }
+table.precios tr + tr th, table.precios tr + tr td { border-top: 1px solid #f4f4f5; }
+
+.pop-sin { font-size: 12px; color: var(--texto-suave); margin-top: 9px; font-style: italic; }
+.pop-fecha { font-size: 11px; color: var(--sin-dato); margin-top: 7px; }
+.pop-boton {
+  margin-top: 10px; width: 100%; padding: 6px 10px; font-size: 12.5px;
+  border: 1px solid var(--propia); background: var(--propia); color: #fff;
+  border-radius: 6px; cursor: pointer; font-family: inherit;
+}
+.pop-boton:hover { background: #115e59; }
+
+/* ------------------------------------------------------------ panel */
+
+.panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: 400px; max-width: 92vw;
+  z-index: 600; background: var(--fondo); border-left: 1px solid var(--borde);
+  overflow-y: auto; padding: 18px 20px 28px;
+  box-shadow: -2px 0 12px rgba(0,0,0,.06);
+}
+.cerrar {
+  position: absolute; top: 10px; right: 12px;
+  border: none; background: none; font-size: 24px; line-height: 1;
+  color: var(--texto-suave); cursor: pointer; padding: 2px 6px;
+}
+.cerrar:hover { color: var(--texto); }
+
+.panel h2 { font-size: 16px; margin: 0 6px 2px 0; padding-right: 24px; line-height: 1.3; }
+.panel .meta { font-size: 12.5px; color: var(--texto-suave); margin-bottom: 14px; line-height: 1.5; }
+.panel h3 {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--texto-suave); margin: 20px 0 8px; font-weight: 600;
+}
+
+.mios { display: flex; gap: 8px; }
+.mio {
+  flex: 1; border: 1px solid var(--borde); border-radius: 8px;
+  padding: 8px 10px; background: var(--fondo-suave);
+}
+.mio .p { font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--texto-suave); }
+.mio .v { font-size: 17px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.mio .v.nd { font-size: 13px; color: var(--sin-dato); }
+
+table.comp { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.comp th {
+  text-align: right; font-weight: 500; color: var(--texto-suave);
+  padding: 5px 4px; border-bottom: 1px solid var(--borde); font-size: 11px;
+}
+table.comp th:first-child { text-align: left; }
+table.comp td { padding: 6px 4px; text-align: right; font-variant-numeric: tabular-nums; }
+table.comp td:first-child { text-align: left; }
+table.comp tr + tr td { border-top: 1px solid #f4f4f5; }
+table.comp .nom { line-height: 1.25; }
+table.comp .km { font-size: 11px; color: var(--texto-suave); }
+.dif.caro   { color: var(--caro); }
+.dif.barato { color: var(--barato); }
+.dif.igual  { color: var(--texto-suave); }
+.nd { color: var(--sin-dato); }
+
+.nota {
+  font-size: 12px; color: var(--texto-suave); line-height: 1.5;
+  background: var(--fondo-suave); border: 1px solid var(--borde);
+  border-left: 3px solid var(--sin-dato);
+  padding: 9px 11px; border-radius: 0 6px 6px 0; margin-top: 12px;
+}
+.nota.alerta { border-left-color: var(--comp); background: #fffbeb; }
+
+ul.eventos { list-style: none; padding: 0; margin: 0; font-size: 12.5px; }
+ul.eventos li { padding: 8px 0; border-top: 1px solid #f4f4f5; line-height: 1.45; }
+ul.eventos li:first-child { border-top: none; }
+ul.eventos .t { font-weight: 500; }
+ul.eventos .d { color: var(--texto-suave); font-size: 11.5px; margin-top: 2px; }
+.rol {
+  display: inline-block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .04em; padding: 1px 6px; border-radius: 4px; margin-left: 6px;
+  background: #f4f4f5; color: var(--texto-suave); vertical-align: 1px;
+}
+
+/* ------------------------------------------------------------ aviso */
+
+.aviso {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  z-index: 900; max-width: 560px;
+  background: #7f1d1d; color: #fff; font-size: 13px; line-height: 1.5;
+  padding: 11px 16px; border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(0,0,0,.2);
+}
+
+@media (max-width: 720px) {
+  .panel { width: 100%; }
+  .leyenda { display: none; }
+  .chips { margin-left: 0; }
+}
+
+/* --------------------------------------------- radio variable y metricas */
+
+.radio { display: flex; align-items: center; gap: 12px; }
+.radio input[type=range] { flex: 1; accent-color: var(--propia); min-width: 0; }
+.radio output {
+  font-variant-numeric: tabular-nums; font-size: 13.5px;
+  min-width: 62px; text-align: right; font-weight: 500;
+}
+.radio-cuenta { font-size: 12px; color: var(--texto-suave); margin-top: 5px; }
+
+table.metricas { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+table.metricas th {
+  font-weight: 500; color: var(--texto-suave); font-size: 11px;
+  text-align: right; padding: 4px 3px; border-bottom: 1px solid var(--borde);
+}
+table.metricas tr > th:first-child { text-align: left; width: 34px; }
+table.metricas td {
+  text-align: right; padding: 7px 3px; font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+}
+table.metricas tr + tr td, table.metricas tr + tr th { border-top: 1px solid #f4f4f5; }
+table.metricas tbody th, table.metricas tr > th:first-child { border-bottom: none; }
+table.metricas small { font-size: 10.5px; }
+
+.fuera {
+  display: inline-block; margin-top: 2px; font-size: 10.5px;
+  background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 4px;
+}
+
+/* ============================================================== layout
+   El mapa deja de ocupar toda la pantalla: se queda con una altura fija y
+   generosa, y la tabla vive debajo. La pagina entera hace scroll. */
+
+body { display: block; min-height: 100%; }
+main { display: block; position: static; }
+
+.barra { position: sticky; top: 0; z-index: 800; }
+
+.mapa-zona {
+  position: relative;
+  height: 62vh; min-height: 430px;
+  border-bottom: 1px solid var(--borde);
+}
+
+/* ====================================================== tabla comparativa */
+
+.tabla-zona { padding: 20px 18px 40px; }
+
+.tabla-barra {
+  display: flex; align-items: center; gap: 22px;
+  flex-wrap: wrap; margin-bottom: 12px;
+}
+.tabla-barra h2 { font-size: 15px; margin: 0; letter-spacing: -0.01em; }
+
+.opciones { display: flex; align-items: center; gap: 16px; }
+.sel { font-size: 12.5px; color: var(--texto-suave); display: flex; align-items: center; gap: 7px; }
+.sel select {
+  font: inherit; font-size: 12.5px; padding: 3px 7px;
+  border: 1px solid var(--borde); border-radius: 6px; background: #fff; color: var(--texto);
+}
+.chk { font-size: 12.5px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.chk input { accent-color: var(--propia); cursor: pointer; }
+
+.semaforo { display: flex; gap: 16px; font-size: 11.5px; color: var(--texto-suave); margin-left: auto; }
+.semaforo span { display: flex; align-items: center; gap: 6px; }
+.sw { width: 13px; height: 13px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,.08); }
+.sw.verde  { background: #dcfce7; }
+.sw.rojo   { background: #fee2e2; }
+.sw.neutro { background: #fff; }
+
+/* Contenedor con scroll propio: 96 filas no deben estirar la pagina, y asi
+   el encabezado pegajoso se ancla A ESTA CAJA y no a la barra superior. */
+.tabla-caja {
+  overflow: auto; max-height: 72vh;
+  border: 1px solid var(--borde); border-radius: 8px;
+}
+.cargando { padding: 28px; text-align: center; color: var(--texto-suave); font-size: 13px; }
+
+table.comparativo {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; font-variant-numeric: tabular-nums;
+}
+table.comparativo thead th {
+  background: #18181b; color: #fff; font-weight: 600;
+  padding: 6px 9px; text-align: center; font-size: 11px;
+  letter-spacing: .03em; white-space: nowrap;
+  position: sticky; top: 0;
+}
+table.comparativo thead tr:last-child th { top: 22px; }
+table.comparativo thead th.grupo { background: #27272a; }
+table.comparativo thead th.pDIESEL  { background: #111827; }
+table.comparativo thead th.pPREMIUM { background: #b91c1c; }
+table.comparativo thead th.pREGULAR { background: #15803d; }
+
+table.comparativo td { padding: 5px 9px; border-top: 1px solid #f1f1f3; text-align: right; }
+table.comparativo td.txt { text-align: left; }
+
+/* Nombre de la estacion propia, ocupando todo su grupo */
+td.base {
+  background: var(--fondo-suave); font-weight: 600; font-size: 13px;
+  vertical-align: middle; text-align: left; white-space: nowrap;
+  border-left: 3px solid var(--azul);
+  cursor: pointer;
+}
+td.base:hover { background: #eff6ff; }
+td.base .mun { display: block; font-weight: 400; font-size: 11px; color: var(--texto-suave); }
+td.mio { background: var(--fondo-suave); vertical-align: middle; font-weight: 500; }
+
+tr.inicio-grupo > td { border-top: 2px solid var(--borde); }
+
+td.comp .nom { line-height: 1.25; }
+td.comp .km { font-size: 11px; color: var(--texto-suave); }
+td.comp .tipo {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  margin-right: 6px; vertical-align: 0;
+}
+td.comp .tipo.directa   { background: var(--rojo); }
+td.comp .tipo.nodirecta { background: var(--amarillo); }
+
+/* Semaforo: 10 centavos, por instruccion del operador */
+td.dif.barato { background: #dcfce7; color: #14532d; font-weight: 600; }
+td.dif.caro   { background: #fee2e2; color: #7f1d1d; font-weight: 600; }
+td.dif.parejo { color: var(--texto-suave); }
+td.vacio { color: var(--sin-dato); }
+td.nc { color: var(--sin-dato); font-size: 11px; }
+
+.sep { border-left: 2px solid var(--borde); }
+
+.pie { font-size: 11.5px; color: var(--texto-suave); margin: 10px 2px 0; line-height: 1.6; }
+
+/* Calendario de la tabla: elige la fecha FINAL del periodo. */
+.sel input[type=date] {
+  font: inherit; font-size: 12.5px; padding: 3px 7px;
+  border: 1px solid var(--borde); border-radius: 6px;
+  background: #fff; color: var(--texto);
+}
+.mini {
+  font: inherit; font-size: 12px; padding: 3px 9px; cursor: pointer;
+  border: 1px solid var(--borde); border-radius: 6px;
+  background: #fff; color: var(--texto-suave);
+}
+.mini:hover { background: var(--fondo-suave); color: var(--texto); }
+.sin-datos {
+  margin-top: 10px; font-size: 12.5px; line-height: 1.5;
+  background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid var(--comp);
+  padding: 9px 12px; border-radius: 0 6px 6px 0;
+}

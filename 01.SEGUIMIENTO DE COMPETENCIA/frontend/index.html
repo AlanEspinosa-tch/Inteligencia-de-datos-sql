@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red Treher — competencia</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="titulo">
+    <strong>Red Treher</strong>
+    <span class="sub">Monitoreo de precios y competencia</span>
+  </div>
+  <div class="chips" id="chips" aria-live="polite"></div>
+  <div class="fecha"></div>
+</header>
+
+<main>
+<section class="mapa-zona">
+  <div id="mapa" role="application" aria-label="Mapa de estaciones"></div>
+
+  <aside id="panel" class="panel" hidden>
+    <button class="cerrar" id="cerrarPanel" aria-label="Cerrar panel">&times;</button>
+    <div id="panelContenido"></div>
+  </aside>
+
+  <div class="controles">
+    <fieldset class="productos" id="productos">
+      <legend class="oculto">Producto</legend>
+      <label><input type="radio" name="producto" value="REGULAR" checked><span class="pd regular"></span>Regular</label>
+      <label><input type="radio" name="producto" value="PREMIUM"><span class="pd premium"></span>Premium</label>
+      <label><input type="radio" name="producto" value="DIESEL"><span class="pd diesel"></span>Diésel</label>
+    </fieldset>
+
+    <div class="leyenda" aria-label="Leyenda">
+      <div class="ley"><span class="m propia">V</span> Mis estaciones</div>
+      <div class="ley"><span class="m directa"></span> Competencia directa</div>
+      <div class="ley"><span class="m nodirecta"></span> Vecina, no compite</div>
+      <div class="ley"><span class="m sin"></span> Sin precio publicado</div>
+    </div>
+  </div>
+</section>
+
+<section class="tabla-zona">
+  <div class="tabla-barra">
+    <h2>Comparativo de precios</h2>
+
+    <div class="opciones">
+      <label class="sel">
+        Periodo
+        <select id="periodo">
+          <option value="1">Último día</option>
+          <option value="7">Últimos 7 días</option>
+          <option value="30" selected>Últimos 30 días</option>
+          <option value="90">Últimos 90 días</option>
+        </select>
+      </label>
+      <label class="sel">
+        Al día
+        <input type="date" id="fecha">
+      </label>
+      <button type="button" id="hoy" class="mini" title="Volver al último día con precios">Último</button>
+      <label class="chk">
+        <input type="checkbox" id="soloDirectas"> Solo competencia directa
+      </label>
+    </div>
+
+    <div class="semaforo">
+      <span><i class="sw verde"></i> Soy más barato 10¢ o más</span>
+      <span><i class="sw rojo"></i> Soy más caro 10¢ o más</span>
+      <span><i class="sw neutro"></i> Diferencia menor a 10¢</span>
+    </div>
+  </div>
+
+  <div id="comparativo" class="tabla-caja"><div class="cargando">Cargando…</div></div>
+  <p class="pie" id="piePeriodo"></p>
+</section>
+</main>
+
+<div id="aviso" class="aviso" hidden></div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
