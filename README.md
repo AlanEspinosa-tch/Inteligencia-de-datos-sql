@@ -2,6 +2,8 @@
 
 Migración integral de la información operativa y de competencia (12 estaciones activas propias y 80 del entorno) desde archivos Excel y CSV dispersos hacia una base de datos relacional formal en SQLite (`red.db`). Este repositorio documenta la estructura de datos que consolida la información y alimenta una aplicación web de monitoreo.
 
+Dentro de la carpeta 01 podrán encontrar las imágenes de la app web que realicé con Claude Code
+
 ##  Objetivo del Proyecto
 Crear una "Single Source of Truth" (Única Fuente de Verdad) robusta y auditable para analizar el entorno competitivo. El sistema cruza precios oficiales de la CNE, costos reales por factura de compra y ventas diarias del sistema interno, permitiendo evaluar el impacto real de la competencia en el volumen de ventas.
 
