@@ -6,7 +6,7 @@ abre todo en modo solo lectura y trabaja sobre una copia local.
 Estado: **etapas 2 a 8 de 12** — conexion, API, mapa, radio variable y comparacion
 de precios, probados (107 comprobaciones de Python mas 28 en navegador).
 
-Se abre en `http://127.0.0.1:8000/`: las 93 estaciones sobre el mapa, y al
+Se abre en entorno local: las 93 estaciones sobre el mapa, y al
 hacer clic en una propia se resaltan sus competidores confirmados.
 
 ## Arrancar
